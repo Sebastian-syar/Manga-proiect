@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Mea Oficială</title>
+    <style>
+        body { background-color: #0d0d0d; color: #ffffff; font-family: 'Arial', sans-serif; margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #ff4500; margin-bottom: 5px; }
+        .subtitlu { color: #888; margin-bottom: 20px; }
+        .manga-container { max-width: 600px; margin: 0 auto; background: #1a1a1a; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .manga-page { width: 100%; height: auto; border-radius: 5px; display: block; }
+        .controale { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        button { background-color: #ff4500; color: white; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        button:disabled { background-color: #444; cursor: not-allowed; }
+        #numar-pagina { font-size: 16px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Titlu Manga Mea</h1>
+    <p class="subtitlu">Capitolul 1: Începutul</p>
+
+    <div class="manga-container">
+        <!-- Aici se va încărca prima pagină din manga ta -->
+        <img id="manga-img" src="pagina1.jpg" alt="Pagina Manga" class="manga-page">
+
+        <div class="controale">
+            <button id="btn-inapoi" onclick="paginaInapoi()" disabled>Înapoi</button>
+            <span id="numar-pagina">Pagina 1</span>
+            <button id="btn-inainte" onclick="paginaInainte()">Înainte</button>
+        </div>
+    </div>
+
+    <script>
+        // Adaugă aici numele exacte ale fișierelor tale de imagini în ordine
+        const pagini = [
+            "pagina1.jpg",
+            "pagina2.jpg",
+            "pagina3.jpg"
+        ];
+
+        let indexCurent = 0;
+
+        const imgElement = document.getElementById("manga-img");
+        const txtPagina = document.getElementById("numar-pagina");
+        const btnInapoi = document.getElementById("btn-inapoi");
+        const btnInainte = document.getElementById("btn-inainte");
+
+        function actualizeazaPagina() {
+            imgElement.src = pagini[indexCurent];
+            txtPagina.innerText = `Pagina ${indexCurent + 1} din ${pagini.length}`;
+            
+            // Activează sau dezactivează butonele în funcție de prima/ultima pagină
+            btnInapoi.disabled = (indexCurent === 0);
+            btnInainte.disabled = (indexCurent === pagini.length - 1);
+            
+            // Derulează automat ecranul sus când se schimbă pagina
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function paginaInainte() {
+            if (indexCurent < pagini.length - 1) {
+                indexCurent++;
+                actualizeazaPagina();
+            }
+        }
+
+        function paginaInapoi() {
+            if (indexCurent > 0) {
+                indexCurent--;
+                actualizeazaPagina();
+            }
+        }
+    </script>
+
+</body>
+</html>
